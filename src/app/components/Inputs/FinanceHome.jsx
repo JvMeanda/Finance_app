@@ -1,25 +1,65 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import Current_month from "../Month/Current_month";
 import Button from "../Button/Button";
-import Calculator from "./Calculator";
 import Input from "./Input";
 import { styles } from "./Styles";
+import { useFinanceDatabase } from "../../database/useFinanceDatabase";
 
 export default function FinanceHome() {
   const [sales, setSales] = useState('');
   const [expenses, setExpenses] = useState('');
   const [description, setDescription] = useState('');
-  const [showResult, setShowResult] = useState(false);
+  const [profit, setProfit] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split('/').reverse().join('-'));
+
+  const financeDatabase = useFinanceDatabase();
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+  async function create() {
+    try {
+      const salesValue = parseFloat(sales);
+      const expensesValue = parseFloat(expenses);
+      const calculatedProfit = salesValue - expensesValue;
+
+      const data = {
+        day: selectedDate,
+        sales: salesValue,
+        expenses: expensesValue,
+        profit: calculatedProfit,
+        description,
+      };
+
+      const response = await financeDatabase.create(data);
+
+      console.log(`Sales: ${salesValue}, Expenses: ${expensesValue}, Description: ${description}, Day: ${selectedDate}, Profit: ${calculatedProfit}`);
+      Alert.alert("Venda registrada", `ID da transação: ${response}`);
+    } catch (error) {
+      Alert.alert("Erro", error.message);
+    }
+  }
 
   const handleCalculate = () => {
-    setShowResult(true);
+    const salesValue = parseFloat(sales);
+    const expensesValue = parseFloat(expenses);
+
+    if (isNaN(salesValue) || isNaN(expensesValue) || sales.trim() === '' || expenses.trim() === '') {
+      Alert.alert("Erro", "Por favor, insira números válidos para vendas e despesas.");
+      return;
+    }
+
+    const calculatedProfit = salesValue - expensesValue;
+    setProfit(calculatedProfit);
+    create();
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.container_month}>
-        <Current_month />
+        <Current_month onDateChange={handleDateChange} />
       </View>
       <Text style={styles.label}>Vendas:</Text>
       <Input
@@ -44,11 +84,11 @@ export default function FinanceHome() {
         style={styles.input}
         placeholder="Insira uma descrição"
         value={description}
-        onChangeText={(value) => setDescription(value)}
+        onChangeText={setDescription}
       />
 
       <Button title="Calcular" onPress={handleCalculate} />
-      <Calculator sales={sales} expenses={expenses} showResult={showResult} />
+      {/* <Calculator sales={sales} expenses={expenses} profit={profit} /> */}
     </View>
   );
 }

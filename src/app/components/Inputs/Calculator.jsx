@@ -3,8 +3,8 @@ import { View, Text } from "react-native";
 import { styles } from "./Styles";
 import { theme } from "../../theme/Index";
 
-export default function Calculator({ sales, expenses, showResult }) {
-  if (!showResult) {
+export default function Calculator({ sales, expenses, profit }) {
+  if (!profit) {
     return null;
   }
 

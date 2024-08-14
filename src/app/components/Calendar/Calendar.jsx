@@ -9,24 +9,21 @@ LocaleConfig.locales["pt-br"] = ptBR;
 LocaleConfig.defaultLocale = "pt-br";
 
 export default function Calendar_time({ onDateChange, selectedDate }) {
-    const [day, setDay] = useState(selectedDate);
     const [markedDates, setMarkedDates] = useState({});
-
-    const handleDayPress = (day) => {
-        setDay(day.dateString);
-        onDateChange(day.dateString);
-    };
-
+    
     useEffect(() => {
         markDates();
-    }, [day]);
+    }, [selectedDate]);
+
+    const handleDayPress = (day) => {
+        onDateChange(day.dateString);
+    };
 
     const markDates = () => {
         const dates = {};
         const today = new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split('/').reverse().join('-');
 
-
-        // dias passados
+        // Dias passados
         for (let i = 1; i <= 365; i++) {
             const date = new Date(new Date().setDate(new Date().getDate() - i)).toISOString().split('T')[0];
             dates[date] = {
@@ -37,7 +34,7 @@ export default function Calendar_time({ onDateChange, selectedDate }) {
                 },
             };
         }
-        // dias futuros
+        // Dias futuros
         for (let i = 0; i <= 365; i++) {
             const date = new Date(new Date().setDate(new Date().getDate() + i)).toISOString().split('T')[0];
             dates[date] = {
@@ -48,7 +45,7 @@ export default function Calendar_time({ onDateChange, selectedDate }) {
                 },
             };
         }
-        // dia atual (hoje)
+        // Dia atual (hoje)
         dates[today] = {
             customStyles: {
                 text: {
@@ -56,9 +53,9 @@ export default function Calendar_time({ onDateChange, selectedDate }) {
                 },
             },
         };
-        // selecionar dia
-        if (day) {
-            dates[day] = {
+        // Selecionar dia
+        if (selectedDate) {
+            dates[selectedDate] = {
                 selected: true,
                 selectedColor: theme.Colors.green_400,
                 selectedTextColor: theme.Colors.black_neutral,

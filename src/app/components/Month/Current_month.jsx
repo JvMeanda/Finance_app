@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Modal } from "react-native";
 import Calendar_time from "../Calendar/Calendar";
 import { styles } from "./Styles";
 
-export default function Current_month() {
-  const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split('/').reverse().join('-'));
+export default function Current_month({ onDateChange }) {
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split('/').reverse().join('-')
+  );
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
 
   const months = [
@@ -12,12 +14,21 @@ export default function Current_month() {
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
   ];
 
+  useEffect(() => {
+    // Se selectedDate ainda for a data inicial e não for alterada, define como a data de hoje
+    const today = new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split('/').reverse().join('-');
+    if (selectedDate === today) {
+      onDateChange(today);  // Atualiza o pai com a data de hoje
+    }
+  }, [selectedDate, onDateChange]);
+
   const handleOpenCalendar = () => {
     setIsCalendarVisible(true);
   };
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    onDateChange(date);  // Passa a data selecionada para o componente pai
     setIsCalendarVisible(false);
   };
 
