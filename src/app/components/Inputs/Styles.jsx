@@ -4,6 +4,7 @@ import { theme } from "../../theme/Index";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '80%',
     justifyContent: 'center',
   },
   container_month: {
@@ -38,4 +39,9 @@ export const styles = StyleSheet.create({
     fontSize: theme.Fonts.size.body.md,
     color: theme.Colors.black,
   },
+  noTransactions: {
+    fontSize: theme.Fonts.size.body.md,
+    textAlign: 'center',
+    padding: 60
+  }
 });

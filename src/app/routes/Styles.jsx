@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
+import { theme } from '../theme/Index';
 
 export const styles = StyleSheet.create({
     labelStyle: {
         fontWeight: 'bold',
-        fontSize: 12,
+        fontSize: theme.Fonts.size.body.xs,
         marginBottom: 5,
     },
     barStyle: {

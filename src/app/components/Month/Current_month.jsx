@@ -15,10 +15,9 @@ export default function Current_month({ onDateChange }) {
   ];
 
   useEffect(() => {
-    // Se selectedDate ainda for a data inicial e não for alterada, define como a data de hoje
     const today = new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split('/').reverse().join('-');
     if (selectedDate === today) {
-      onDateChange(today);  // Atualiza o pai com a data de hoje
+      onDateChange(today);
     }
   }, [selectedDate, onDateChange]);
 
@@ -28,7 +27,7 @@ export default function Current_month({ onDateChange }) {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    onDateChange(date);  // Passa a data selecionada para o componente pai
+    onDateChange(date); 
     setIsCalendarVisible(false);
   };
 

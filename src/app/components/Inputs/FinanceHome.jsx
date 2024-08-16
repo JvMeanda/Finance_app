@@ -1,19 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Alert } from "react-native";
 import Current_month from "../Month/Current_month";
 import Button from "../Button/Button";
 import Input from "./Input";
+import Calculator from "./Calculator";
 import { styles } from "./Styles";
 import { useFinanceDatabase } from "../../database/useFinanceDatabase";
+import TransactionTable from "../Tables/TransactionTable";
 
 export default function FinanceHome() {
   const [sales, setSales] = useState('');
   const [expenses, setExpenses] = useState('');
   const [description, setDescription] = useState('');
-  const [profit, setProfit] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }).split('/').reverse().join('-'));
+  const [accumulatedSales, setAccumulatedSales] = useState(0);
+  const [accumulatedExpenses, setAccumulatedExpenses] = useState(0);
+  const [accumulatedProfit, setAccumulatedProfit] = useState(0);
+  const [allTransactions, setAllTransactions] = useState([]);
 
   const financeDatabase = useFinanceDatabase();
+
+  useEffect(() => {
+    async function loadTransactions() {
+      try {
+        const transactions = await financeDatabase.getAllTransactions();
+        setAllTransactions(transactions);
+        if (transactions.length > 0) {
+          const totalSales = transactions.reduce((sum, item) => sum + item.sales, 0);
+          const totalExpenses = transactions.reduce((sum, item) => sum + item.expenses, 0);
+          const totalProfit = totalSales - totalExpenses;
+
+          setAccumulatedSales(totalSales);
+          setAccumulatedExpenses(totalExpenses);
+          setAccumulatedProfit(totalProfit);
+        }
+      } catch (error) {
+        Alert.alert("Erro", "Não foi possível carregar os valores acumulados.");
+      }
+    }
+
+    loadTransactions();
+  }, []);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -23,20 +50,32 @@ export default function FinanceHome() {
     try {
       const salesValue = parseFloat(sales);
       const expensesValue = parseFloat(expenses);
-      const calculatedProfit = salesValue - expensesValue;
+
+      const newAccumulatedSales = accumulatedSales + salesValue;
+      const newAccumulatedExpenses = accumulatedExpenses + expensesValue;
+      const newAccumulatedProfit = newAccumulatedSales - newAccumulatedExpenses;
 
       const data = {
         day: selectedDate,
         sales: salesValue,
         expenses: expensesValue,
-        profit: calculatedProfit,
+        profit: newAccumulatedProfit,
         description,
       };
 
-      const response = await financeDatabase.create(data);
+      await financeDatabase.create(data);
 
-      console.log(`Sales: ${salesValue}, Expenses: ${expensesValue}, Description: ${description}, Day: ${selectedDate}, Profit: ${calculatedProfit}`);
-      Alert.alert("Venda registrada", `ID da transação: ${response}`);
+      console.log(`Vendas: ${newAccumulatedSales}, Despesas: ${newAccumulatedExpenses}, Descrição: ${description}, Dia: ${selectedDate}, Lucro: ${newAccumulatedProfit}`);
+
+      setAccumulatedSales(newAccumulatedSales);
+      setAccumulatedExpenses(newAccumulatedExpenses);
+      setAccumulatedProfit(newAccumulatedProfit);
+
+      setAllTransactions([...allTransactions, data]);
+
+      setSales('');
+      setExpenses('');
+      setDescription('');
     } catch (error) {
       Alert.alert("Erro", error.message);
     }
@@ -51,8 +90,6 @@ export default function FinanceHome() {
       return;
     }
 
-    const calculatedProfit = salesValue - expensesValue;
-    setProfit(calculatedProfit);
     create();
   };
 
@@ -88,7 +125,19 @@ export default function FinanceHome() {
       />
 
       <Button title="Calcular" onPress={handleCalculate} />
-      {/* <Calculator sales={sales} expenses={expenses} profit={profit} /> */}
+
+      {allTransactions.length === 0 ? (
+        <Text style={styles.noTransactions}>Sem Transações!</Text>
+      ) : (
+        <>
+          <Calculator
+            sales={accumulatedSales}
+            expenses={accumulatedExpenses}
+            profit={accumulatedProfit}
+          />
+          <TransactionTable transactions={allTransactions} />
+        </>
+      )}
     </View>
   );
 }

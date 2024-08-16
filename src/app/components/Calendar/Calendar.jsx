@@ -81,7 +81,7 @@ export default function Calendar_time({ onDateChange, selectedDate }) {
                     marginBottom: 10,
                 }}
                 theme={{
-                    textMonthFontSize: 18,
+                    textMonthFontSize: theme.Fonts.size.heading.sm,
                     calendarBackground: 'transparent',
                     arrowColor: theme.Colors.green_600,
                     monthTextColor: theme.Colors.green_600,
