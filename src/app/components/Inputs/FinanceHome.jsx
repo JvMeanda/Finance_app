@@ -46,7 +46,7 @@ export default function FinanceHome() {
     setSelectedDate(date);
   };
 
-  async function create() {
+  async function createTransaction() {
     try {
       const salesValue = parseFloat(sales);
       const expensesValue = parseFloat(expenses);
@@ -63,9 +63,7 @@ export default function FinanceHome() {
         description,
       };
 
-      await financeDatabase.create(data);
-
-      console.log(`Vendas: ${newAccumulatedSales}, Despesas: ${newAccumulatedExpenses}, Descrição: ${description}, Dia: ${selectedDate}, Lucro: ${newAccumulatedProfit}`);
+      await financeDatabase.createTransaction(data);
 
       setAccumulatedSales(newAccumulatedSales);
       setAccumulatedExpenses(newAccumulatedExpenses);
@@ -90,7 +88,7 @@ export default function FinanceHome() {
       return;
     }
 
-    create();
+    createTransaction();
   };
 
   return (
@@ -135,7 +133,7 @@ export default function FinanceHome() {
             expenses={accumulatedExpenses}
             profit={accumulatedProfit}
           />
-          <TransactionTable transactions={allTransactions} />
+          <TransactionTable transactions={allTransactions} setAllTransactions={setAllTransactions} />
         </>
       )}
     </View>

@@ -42,4 +42,43 @@ export const styles = StyleSheet.create({
   lastColumn: {
     borderRightWidth: 0,
   },
+  // Novo estilo para o fundo do modal
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Cor de fundo opaca
+  },
+  modalView: {
+    width: "80%", // Ajuste conforme necessário
+    padding: 35,
+    backgroundColor: theme.Colors.white,
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    marginTop: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: theme.Colors.gray_200,
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 15,
+    fontSize: theme.Fonts.size.body.md,
+  },
+  label: {
+    fontSize: theme.Fonts.size.body.md,
+    color: theme.Colors.black,
+  },
 });

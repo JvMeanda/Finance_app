@@ -1,18 +1,9 @@
 import { useSQLiteContext } from "expo-sqlite";
 
-export type financeDatabase = {
-  id: number;
-  day: string;
-  sales: number;
-  expenses: number;
-  profit: number;
-  description: string;
-};
-
 export function useFinanceDatabase() {
   const database = useSQLiteContext();
 
-  async function create(data: Omit<financeDatabase, "id">): Promise<{ insertedRowId: string }> {
+  async function createTransaction(data) {
     let statement;
     try {
       statement = await database.prepareAsync(
@@ -38,15 +29,56 @@ export function useFinanceDatabase() {
     }
   }
 
+  async function deleteTransaction(id) {
+    let statement;
+    try {
+      statement = await database.prepareAsync(
+        "DELETE FROM transactions WHERE id = $id"
+      );
+
+      await statement.executeAsync({ $id: id });
+      console.log(`Transaction with ID ${id} deleted.`);
+    } catch (error) {
+      console.error("Failed to delete transaction:", error);
+      throw new Error("Failed to delete transaction");
+    } finally {
+      if (statement) {
+        statement.finalizeAsync();
+      }
+    }
+  }
+
+  async function updateTransaction(data) {
+    let statement;
+    try {
+      statement = await database.prepareAsync(
+        "UPDATE transactions SET day = $day, sales = $sales, expenses = $expenses, profit = $profit, description = $description WHERE id = $id"
+      );
+      await statement.executeAsync({
+        $id: data.id,
+        $day: data.day,
+        $sales: data.sales,
+        $expenses: data.expenses,
+        $profit: data.profit,
+        $description: data.description,
+      });
+      console.log(`Transaction with ID ${data.id} updated.`);
+    } catch (error) {
+      console.error("Failed to update transaction:", error);
+      throw new Error("Failed to update transaction");
+    } finally {
+      if (statement) {
+        statement.finalizeAsync();
+      }
+    }
+  }
+
   async function getAllTransactions() {
     let statement;
     try {
       statement = await database.prepareAsync("SELECT * FROM transactions");
       const result = await statement.executeAsync();
-      
       const transactions = await result.getAllAsync();
-      console.log("Transactions loaded:", transactions); 
-      
       return transactions;
     } catch (error) {
       console.error("Failed to retrieve transactions:", error);
@@ -58,5 +90,5 @@ export function useFinanceDatabase() {
     }
   }
 
-  return { create, getAllTransactions };
+  return { createTransaction, updateTransaction, deleteTransaction, getAllTransactions };
 }
