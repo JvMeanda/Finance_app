@@ -24,6 +24,7 @@ export default function FinanceHome() {
     async function loadTransactions() {
       try {
         const transactions = await financeDatabase.getAllTransactions();
+        console.log("Loaded transactions:", transactions); 
         setAllTransactions(transactions);
         if (transactions.length > 0) {
           const totalSales = transactions.reduce((sum, item) => sum + item.sales, 0);
@@ -46,15 +47,15 @@ export default function FinanceHome() {
     setSelectedDate(date);
   };
 
-  async function create() {
+  async function createTransaction() {
     try {
       const salesValue = parseFloat(sales);
       const expensesValue = parseFloat(expenses);
-
+  
       const newAccumulatedSales = accumulatedSales + salesValue;
       const newAccumulatedExpenses = accumulatedExpenses + expensesValue;
       const newAccumulatedProfit = newAccumulatedSales - newAccumulatedExpenses;
-
+  
       const data = {
         day: selectedDate,
         sales: salesValue,
@@ -62,17 +63,17 @@ export default function FinanceHome() {
         profit: newAccumulatedProfit,
         description,
       };
-
-      await financeDatabase.create(data);
-
-      console.log(`Vendas: ${newAccumulatedSales}, Despesas: ${newAccumulatedExpenses}, Descrição: ${description}, Dia: ${selectedDate}, Lucro: ${newAccumulatedProfit}`);
-
+  
+      const { insertedRowId } = await financeDatabase.createTransaction(data);
+  
+      const newValueID = { ...data, id: insertedRowId };
+  
       setAccumulatedSales(newAccumulatedSales);
       setAccumulatedExpenses(newAccumulatedExpenses);
       setAccumulatedProfit(newAccumulatedProfit);
-
-      setAllTransactions([...allTransactions, data]);
-
+  
+      setAllTransactions([...allTransactions, newValueID]);
+  
       setSales('');
       setExpenses('');
       setDescription('');
@@ -80,6 +81,7 @@ export default function FinanceHome() {
       Alert.alert("Erro", error.message);
     }
   }
+  
 
   const handleCalculate = () => {
     const salesValue = parseFloat(sales);
@@ -90,7 +92,13 @@ export default function FinanceHome() {
       return;
     }
 
-    create();
+    createTransaction();
+  };
+
+  const updateAccumulatedValues = (sales, expenses, profit) => {
+    setAccumulatedSales(sales);
+    setAccumulatedExpenses(expenses);
+    setAccumulatedProfit(profit);
   };
 
   return (
@@ -135,7 +143,11 @@ export default function FinanceHome() {
             expenses={accumulatedExpenses}
             profit={accumulatedProfit}
           />
-          <TransactionTable transactions={allTransactions} />
+          <TransactionTable
+            transactions={allTransactions}
+            setAllTransactions={setAllTransactions}
+            updateAccumulatedValues={updateAccumulatedValues}
+          />
         </>
       )}
     </View>
