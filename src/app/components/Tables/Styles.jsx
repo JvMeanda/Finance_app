@@ -21,7 +21,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 4,
     textAlign: "center",
     fontWeight: "bold",
-    color: theme.Colors.gray_700,
     borderRightWidth: 1,
     borderRightColor: theme.Colors.gray_300,
   },
@@ -35,22 +34,21 @@ export const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 4,
     textAlign: "center",
-    color: theme.Colors.gray_700,
     borderRightWidth: 1,
     borderRightColor: theme.Colors.gray_300,
   },
   lastColumn: {
     borderRightWidth: 0,
   },
-  // Novo estilo para o fundo do modal
+ 
   modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Cor de fundo opaca
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalView: {
-    width: "80%", // Ajuste conforme necessário
+    width: "80%",
     padding: 35,
     backgroundColor: theme.Colors.white,
     borderRadius: 20,

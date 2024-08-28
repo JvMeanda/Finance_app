@@ -4,7 +4,7 @@ import { theme } from "../../theme/Index";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '80%',
+    
     justifyContent: 'center',
   },
   container_month: {

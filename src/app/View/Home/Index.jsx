@@ -7,7 +7,6 @@ import { theme } from "../../theme/Index";
 export default function Home() {
     return (
         <View style={styles.container}>
-            <StatusBar backgroundColor={theme.Colors.black}/>
              <FinanceHome/>
         </View>
     )

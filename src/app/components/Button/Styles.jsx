@@ -14,5 +14,5 @@ export const styles = StyleSheet.create({
         padding: 6,
         marginVertical:4,
         textAlign: 'center',
-    }
+    },
 })

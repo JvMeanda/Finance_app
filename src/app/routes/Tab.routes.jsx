@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../View/Home/Index';
-import Dashboard from '../View/Dashboard_month/Index';
+import Dashboard from '../View/Dashboard/Index';
 import { MaterialIcons } from '@expo/vector-icons';
 import { styles } from './Styles';
 import { theme } from '../theme/Index';

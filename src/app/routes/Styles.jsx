@@ -8,8 +8,8 @@ export const styles = StyleSheet.create({
         marginBottom: 5,
     },
     barStyle: {
-        paddingVertical: 10,
-        height: 60,
+        paddingVertical: 1,
+        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
     },

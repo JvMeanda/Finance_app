@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, FlatList, Modal, Button } from "react-native";
+import { View, Text, FlatList, Modal } from "react-native";
+import Button from "../Button/Button";
 import { styles } from "./Styles";
 import { useFinanceDatabase } from "../../database/useFinanceDatabase";
+import Feather from '@expo/vector-icons/Feather';
 import Input from "../Inputs/Input";
 import { Alert } from "react-native";
 
@@ -22,7 +24,7 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
 
   const handleUpdate = async () => {
     if (!selectedTransaction) return;
-  
+
     const updatedData = {
       id: selectedTransaction.id,
       day: selectedTransaction.day,
@@ -31,7 +33,7 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
       profit: parseFloat(editSales) - parseFloat(editExpenses),
       description: editDescription,
     };
-  
+
     try {
       await updateTransaction(updatedData);
       setAllTransactions((prevTransactions) => {
@@ -53,7 +55,7 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
       Alert.alert("Erro", "Falha ao atualizar a transação.");
     }
   };
-  
+
 
   const handleDelete = async () => {
     try {
@@ -81,7 +83,7 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
       Alert.alert("Erro", "Falha ao excluir a transação.");
     }
   };
-  
+
 
   const renderTransactionItem = ({ item }) => {
     console.log("Rendered item:", item);
@@ -103,7 +105,6 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
       </View>
     );
   };
-  
 
   return (
     <View style={styles.table}>
@@ -127,7 +128,7 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
-            <Text style={styles.label}>Vendas:</Text>
+              <Text style={styles.label}>Vendas:</Text>
               <Input
                 style={styles.input}
                 placeholder="Venda"
@@ -135,7 +136,7 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
                 onChangeText={setEditSales}
                 keyboardType="numeric"
               />
-             <Text style={styles.label}>Despesas:</Text>
+              <Text style={styles.label}>Despesas:</Text>
               <Input
                 style={styles.input}
                 placeholder="Despesas"
@@ -143,7 +144,7 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
                 onChangeText={setEditExpenses}
                 keyboardType="numeric"
               />
-             <Text style={styles.label}>Descrição:</Text>
+              <Text style={styles.label}>Descrição:</Text>
               <Input
                 style={styles.input}
                 placeholder="Descrição"
@@ -151,9 +152,9 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
                 onChangeText={setEditDescription}
               />
               <View style={styles.modalButtonContainer}>
-                <Button title="Editar" onPress={handleUpdate} />
-                <Button title="Deletar" onPress={handleDelete} />
-                <Button title="Cancelar" onPress={() => setModalVisible(false)} />
+                <Button icon={<Feather name="edit" size={24} color="black" />} onPress={handleUpdate} />
+                <Button icon={<Feather name="trash-2" size={24} color="black" />} onPress={handleDelete} />
+                <Button icon={<Feather name="x" size={24} color="black" />} onPress={() => setModalVisible(false)} />
               </View>
             </View>
           </View>
