@@ -23,6 +23,8 @@ export default function DashboardMonth({ transactions }) {
     return (sales - expenses).toFixed(2);
   };
 
+  const sortedTransactions = transactions.slice().sort((a, b) => new Date(a.day) - new Date(b.day));
+
   const renderTransactionItem = ({ item }) => {
     const profit = calculateProfit(item.sales, item.expenses);
 
@@ -56,7 +58,7 @@ export default function DashboardMonth({ transactions }) {
           </View>
           
           <FlatList
-            data={transactions}
+            data={sortedTransactions}
             renderItem={renderTransactionItem}
             keyExtractor={(item) => item.id?.toString() || item.day + item.sales.toString()}
             style={styles.flatList}

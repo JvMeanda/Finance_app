@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Alert, FlatList } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, TouchableOpacity, Alert, FlatList, RefreshControl } from 'react-native';
 import DashboardMonth from './DashboardMonth';
 import { styles } from './Styles';
 import { theme } from '../../theme/Index';
@@ -12,28 +12,33 @@ export default function FinanceDashboard({ selectedDate }) {
     const [years, setYears] = useState([2023, 2024]);
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [selectedMonth, setSelectedMonth] = useState(null);
+    const [refreshing, setRefreshing] = useState(false);
 
     const financeDatabase = useFinanceDatabase();
     const green = theme.Colors.green_600;
     const red = theme.Colors.red_700;
 
-    useEffect(() => {
-        async function loadTransactions() {
-            try {
-                const transactions = await financeDatabase.getAllTransactions();
-                console.log("Loaded transactions:", transactions);
-                setTransactions(transactions);
+    const loadTransactions = useCallback(async () => {
+        try {
+            setRefreshing(true);
+            const transactions = await financeDatabase.getAllTransactions();
+            console.log("Loaded transactions:", transactions);
+            const sortedTransactions = transactions.slice().sort((a, b) => new Date(a.day) - new Date(b.day));
+            setTransactions(sortedTransactions);
 
-                const uniqueYears = [...new Set(transactions.map((transaction) => new Date(transaction.day).getFullYear()))];
-                setYears((prevYears) => [...new Set([...prevYears, ...uniqueYears])]);
-
-            } catch (error) {
-                Alert.alert("Erro", "Não foi possível carregar as transações.");
-            }
+            const uniqueYears = [...new Set(transactions.map((transaction) => new Date(transaction.day).getFullYear()))];
+            const sortedYears = uniqueYears.sort((a, b) => a - b);
+            setYears((prevYears) => [...new Set([...prevYears, ...sortedYears])]);
+        } catch (error) {
+            Alert.alert("Erro", "Não foi possível carregar as transações.");
+        } finally {
+            setRefreshing(false);
         }
-
-        loadTransactions();
     }, []);
+
+    useEffect(() => {
+        loadTransactions();
+    }, [loadTransactions]);
 
     useEffect(() => {
         if (selectedDate) {
@@ -163,6 +168,12 @@ export default function FinanceDashboard({ selectedDate }) {
                 data={years}
                 renderItem={renderYear}
                 keyExtractor={(item) => item.toString()}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={loadTransactions}
+                    />
+                }
             />
         </View>
     );

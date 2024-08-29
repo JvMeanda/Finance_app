@@ -22,6 +22,8 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
     return `${day}/${month}/${year.slice(-2)}`;
   };
 
+  const sortedTransactions = transactions.slice().sort((a, b) => new Date(a.day) - new Date(b.day));
+
   const handleUpdate = async () => {
     if (!selectedTransaction) return;
 
@@ -114,7 +116,7 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
         <Text style={styles.tableHeaderCell}>Despesa</Text>
       </View>
       <FlatList
-        data={transactions}
+        data={sortedTransactions}
         renderItem={renderTransactionItem}
         keyExtractor={(item) => item.id?.toString() || item.day + item.sales.toString()}
       />
