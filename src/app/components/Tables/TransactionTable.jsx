@@ -10,8 +10,9 @@ import { Alert } from "react-native";
 export default function TransactionTable({ transactions, setAllTransactions, updateAccumulatedValues }) {
   const { deleteTransaction, updateTransaction } = useFinanceDatabase();
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalTableVisible, setModalTableVisible] = useState(false);
+  const [tableVisible, setTableVisible] = useState(true);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-
   const [editSales, setEditSales] = useState('');
   const [editExpenses, setEditExpenses] = useState('');
   const [editDescription, setEditDescription] = useState('');
@@ -108,18 +109,51 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
     );
   };
 
+  const confirmHideTable = () => {
+    setAllTransactions([]);
+    updateAccumulatedValues(0, 0, 0)
+    setTableVisible(false);
+    setModalTableVisible(false);
+  };
+
+const handleModalPress = () => {
+  setModalTableVisible(true);
+}
+
   return (
     <View style={styles.table}>
-      <View style={styles.tableHeader}>
+      <View style={styles.tableHeader} onTouchEnd={handleModalPress}>
         <Text style={styles.tableHeaderCell}>Dia</Text>
         <Text style={styles.tableHeaderCell}>Venda</Text>
         <Text style={styles.tableHeaderCell}>Despesa</Text>
       </View>
-      <FlatList
-        data={sortedTransactions}
-        renderItem={renderTransactionItem}
-        keyExtractor={(item) => item.id?.toString() || item.day + item.sales.toString()}
-      />
+
+      {tableVisible ? (
+        <FlatList
+          data={sortedTransactions}
+          renderItem={renderTransactionItem}
+          keyExtractor={(item) => item.id?.toString() || item.day + item.sales.toString()}
+        />
+
+      ) : ( <Text style={styles.noTransactions}>Sem Transações!</Text>)}
+
+      <Modal
+      animationType="fade"
+      transparent={true}
+      visible={modalTableVisible}
+      onRequestClose={() => setModalTableVisible(true)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <Text>Deseja Excluir as Transições?</Text>
+            <View style={styles.modalButtonContainer}>
+            <Button icon={<Feather name="check" size={24} color="black" />} onPress={confirmHideTable} />
+            <Button icon={<Feather name="x" size={24} color="black" />} onPress={() => setModalTableVisible(false)} />
+          </View>
+          </View>
+        </View>
+
+      </Modal>
 
       {selectedTransaction && (
         <Modal
