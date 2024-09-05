@@ -1,9 +1,9 @@
 import React from "react";
-import Routes from "./routes/Index";
+import Routes from "./src/app/routes/Index";
 import { SQLiteProvider } from "expo-sqlite";
-import { initializeDatabase } from "./database/initializeDatabase";
+import { initializeDatabase } from "./src/app/database/initializeDatabase";
 import { StatusBar } from "react-native";
-import { theme } from "./theme/Index";
+import { theme } from "./src/app/theme/Index";
 
 export default function Index() {
     return (

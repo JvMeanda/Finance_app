@@ -40,9 +40,9 @@ export const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 4,
     textAlign: "center",
-    fontWeight: "bold",
     borderRightWidth: 1,
     borderRightColor: theme.Colors.gray_300,
+    fontWeight: 'bold',
   },
   tableRow: {
     flexDirection: "row",

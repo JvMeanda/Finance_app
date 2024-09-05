@@ -23,8 +23,7 @@ export default function FinanceHome() {
   useEffect(() => {
     async function loadTransactions() {
       try {
-        const transactions = await financeDatabase.getAllTransactions();
-        console.log("Loaded transactions:", transactions); 
+        const transactions = await financeDatabase.getAllTransactions(); 
         setAllTransactions(transactions);
         if (transactions.length > 0) {
           const totalSales = transactions.reduce((sum, item) => sum + item.sales, 0);

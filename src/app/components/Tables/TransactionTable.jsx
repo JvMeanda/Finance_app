@@ -80,7 +80,7 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
         setModalVisible(false);
         Alert.alert("Sucesso", "Transação excluída com sucesso.");
       } else {
-        console.error("Failed to delete: ID is undefined.");
+        console.error("Erro ao deletar transação");
       }
     } catch (error) {
       Alert.alert("Erro", "Falha ao excluir a transação.");
@@ -89,12 +89,10 @@ export default function TransactionTable({ transactions, setAllTransactions, upd
 
 
   const renderTransactionItem = ({ item }) => {
-    console.log("Rendered item:", item);
     return (
       <View
         style={styles.tableRow}
         onTouchEnd={() => {
-          console.log("Selected Item ID:", item.id);
           setSelectedTransaction(item);
           setEditSales(item.sales.toString());
           setEditExpenses(item.expenses.toString());

@@ -54,7 +54,7 @@ export default function DashboardMonth({ transactions }) {
             <Text style={styles.tableHeaderCell}>Dia</Text>
             <Text style={styles.tableHeaderCell}>Venda</Text>
             <Text style={styles.tableHeaderCell}>Despesa</Text>
-            <Text style={styles.tableHeaderCell}>Lucro</Text>
+            <Text style={styles.tableHeaderCell}>Total</Text>
           </View>
           
           <FlatList

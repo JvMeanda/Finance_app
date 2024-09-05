@@ -78,5 +78,6 @@ export const styles = StyleSheet.create({
   label: {
     fontSize: theme.Fonts.size.body.md,
     color: theme.Colors.black,
+    fontWeight: 'bold',
   },
 });

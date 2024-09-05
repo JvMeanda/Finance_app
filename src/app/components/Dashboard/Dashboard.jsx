@@ -22,7 +22,6 @@ export default function FinanceDashboard({ selectedDate }) {
         try {
             setRefreshing(true);
             const transactions = await financeDatabase.getAllTransactions();
-            console.log("Loaded transactions:", transactions);
             const sortedTransactions = transactions.slice().sort((a, b) => new Date(a.day) - new Date(b.day));
             setTransactions(sortedTransactions);
 

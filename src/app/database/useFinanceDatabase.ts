@@ -20,35 +20,44 @@ export function useFinanceDatabase() {
 
       return { insertedRowId: result.lastInsertRowId.toString() };
     } catch (error) {
-      console.error("Failed to create transaction:", error);
-      throw new Error("Failed to create transaction");
+      console.error("Erro ao criar transação", error.message);
+      throw new Error("Não foi possível criar a transação. Tente novamente.");
     } finally {
       if (statement) {
-        statement.finalizeAsync();
+        try {
+          await statement.finalizeAsync();
+        } catch (error) {
+          console.error("Falha ao finalizar statement:", error.message);
+        }
       }
     }
+
   }
 
   async function deleteTransaction(id) {
     let statement;
     try {
       if (!id) {
-        throw new Error("Transaction ID is undefined.");
+        throw new Error("ID da transação não definido");
       }
       statement = await database.prepareAsync(
         "DELETE FROM transactions WHERE id = $id"
       );
 
       await statement.executeAsync({ $id: id });
-    console.log(`Transaction with ID ${id} deleted`);
     } catch (error) {
-      console.error("Failed to delete transaction:", error);
-      throw new Error("Failed to delete transaction");
+      console.error("Erro ao deletar a transação", error.message);
+      throw new Error("Não foi possível deletar a transação. Tente novamente.");
     } finally {
       if (statement) {
-        statement.finalizeAsync();
+        try {
+          await statement.finalizeAsync();
+        } catch (error) {
+          console.error("Falha ao finalizar statement:", error.message);
+        }
       }
     }
+
   }
 
   async function updateTransaction(data) {
@@ -65,16 +74,20 @@ export function useFinanceDatabase() {
         $profit: data.profit,
         $description: data.description,
       });
-      console.log(`Transaction with ID ${data.id} updated`);
     } catch (error) {
-      console.error("Failed to update transaction:", error);
-      throw new Error("Failed to update transaction");
+      console.error("Falha ao atualizar a transação:", error.message);
+      throw new Error("Não foi possível atualizar a transação. Tente novamente.");
     } finally {
       if (statement) {
-        statement.finalizeAsync();
+        try {
+          await statement.finalizeAsync();
+        } catch (error) {
+          console.error("Falha ao finalizar statement:", error.message);
+        }
       }
     }
-  }  
+
+  }
 
   async function getAllTransactions() {
     let statement;
@@ -82,16 +95,20 @@ export function useFinanceDatabase() {
       statement = await database.prepareAsync("SELECT * FROM transactions");
       const result = await statement.executeAsync();
       const transactions = await result.getAllAsync();
-      console.log("Transactions retrieved:", transactions);
       return transactions;
     } catch (error) {
-      console.error("Failed to retrieve transactions:", error);
-      throw new Error("Failed to retrieve transactions");
+      console.error("Falha ao recuperar transações:", error.message);
+      throw new Error("Não foi possível recuperar as transações. Tente novamente.");
     } finally {
       if (statement) {
-        statement.finalizeAsync();
+        try {
+          await statement.finalizeAsync();
+        } catch (error) {
+          console.error("Falha ao finalizar statement:", error.message);
+        }
       }
     }
+
   }
 
   return { createTransaction, updateTransaction, deleteTransaction, getAllTransactions };

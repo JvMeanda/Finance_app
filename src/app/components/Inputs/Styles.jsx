@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
   label: {
     fontSize: theme.Fonts.size.body.md,
     color: theme.Colors.black,
+    fontWeight: 'bold',
   },
   input: {
     borderWidth: 1,
@@ -38,6 +39,7 @@ export const styles = StyleSheet.create({
   label_amount: {
     fontSize: theme.Fonts.size.body.md,
     color: theme.Colors.black,
+    fontWeight: 'bold',
   },
   noTransactions: {
     fontSize: theme.Fonts.size.body.md,
