@@ -164,7 +164,6 @@ const handleModalPress = () => {
             <View style={styles.modalView}>
               <Text style={styles.label}>Vendas:</Text>
               <Input
-                style={styles.input}
                 placeholder="Venda"
                 value={editSales}
                 onChangeText={setEditSales}
@@ -172,7 +171,6 @@ const handleModalPress = () => {
               />
               <Text style={styles.label}>Despesas:</Text>
               <Input
-                style={styles.input}
                 placeholder="Despesas"
                 value={editExpenses}
                 onChangeText={setEditExpenses}
@@ -180,7 +178,6 @@ const handleModalPress = () => {
               />
               <Text style={styles.label}>Descrição:</Text>
               <Input
-                style={styles.input}
                 placeholder="Descrição"
                 value={editDescription}
                 onChangeText={setEditDescription}

@@ -4,7 +4,7 @@ import { theme } from "../../theme/Index";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+    width: '80%',
     justifyContent: 'center',
   },
   container_month: {
@@ -13,19 +13,19 @@ export const styles = StyleSheet.create({
   label: {
     fontSize: theme.Fonts.size.body.md,
     color: theme.Colors.black,
-    fontWeight: 'bold',
+    fontFamily: theme.Fonts.family.bold,
   },
   input: {
     borderWidth: 1,
     borderColor: theme.Colors.gray_200,
     borderRadius: 5,
-    padding: 10,
+    padding: 8,
     marginBottom: 15,
     fontSize: theme.Fonts.size.body.md,
   },
   result: {
-    fontSize: theme.Fonts.size.heading.md,
-    fontWeight: 'bold',
+    fontSize: theme.Fonts.size.heading.sm,
+    fontFamily: theme.Fonts.family.bold,
   },
   resultContainer: {
     flexDirection: 'row',
@@ -34,12 +34,12 @@ export const styles = StyleSheet.create({
     marginVertical: 8
   },
   value: {
-    fontSize: theme.Fonts.size.body.md,
+    fontSize: theme.Fonts.size.body.sm,
   },
   label_amount: {
     fontSize: theme.Fonts.size.body.md,
     color: theme.Colors.black,
-    fontWeight: 'bold',
+    fontFamily: theme.Fonts.family.bold,
   },
   noTransactions: {
     fontSize: theme.Fonts.size.body.md,

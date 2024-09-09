@@ -17,10 +17,10 @@ export const styles = StyleSheet.create({
   },
   tableHeaderCell: {
     flex: 1,
-    paddingVertical: 8,
+    paddingVertical: 4,
     paddingHorizontal: 4,
     textAlign: "center",
-    fontWeight: "bold",
+    fontFamily: theme.Fonts.family.bold,
     borderRightWidth: 1,
     borderRightColor: theme.Colors.gray_300,
   },
@@ -71,13 +71,13 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.Colors.gray_200,
     borderRadius: 5,
-    padding: 10,
+    padding: 8,
     marginBottom: 15,
     fontSize: theme.Fonts.size.body.md,
   },
   label: {
     fontSize: theme.Fonts.size.body.md,
     color: theme.Colors.black,
-    fontWeight: 'bold',
+    fontFamily: theme.Fonts.family.bold,
   },
 });

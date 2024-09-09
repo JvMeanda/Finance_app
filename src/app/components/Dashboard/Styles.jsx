@@ -11,17 +11,17 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   textYear: {
-    fontSize: theme.Fonts.size.heading.lg,
-    fontWeight: 'bold',
+    fontSize: theme.Fonts.size.heading.md,
+    fontFamily: theme.Fonts.family.bold,
     textAlign: 'center',
   },
   textMonth: {
-    fontSize: theme.Fonts.size.heading.sm,
-     fontWeight: 'bold'
+    fontSize: theme.Fonts.size.heading.xs,
+    fontFamily: theme.Fonts.family.bold,
   },
   noTransactionsMessage: {
-    fontSize: theme.Fonts.size.heading.sm,
-    fontWeight: 'bold',
+    fontSize: theme.Fonts.size.heading.xs,
+    fontFamily: theme.Fonts.family.bold,
     textAlign: 'center',
     margin: 20,
   },
@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     borderRightWidth: 1,
     borderRightColor: theme.Colors.gray_300,
-    fontWeight: 'bold',
+    fontFamily: theme.Fonts.family.bold,
   },
   tableRow: {
     flexDirection: "row",
@@ -71,24 +71,23 @@ export const styles = StyleSheet.create({
   },
   containerValues: {
     alignItems: 'center',
-    marginBottom:20,
   },
   value: {
     fontSize: theme.Fonts.size.body.md,
-    fontWeight: 'bold'
+    fontFamily: theme.Fonts.family.bold,
   },
   result: {
-    fontSize: theme.Fonts.size.body.md,
-    fontWeight: 'bold'
+    fontSize: theme.Fonts.size.body.sm,
+    fontFamily: theme.Fonts.family.bold,
   },
   label_amount: {
-    fontSize: theme.Fonts.size.body.md,
-    fontWeight: 'bold',
+    fontSize: theme.Fonts.size.body.sm,
+    fontFamily: theme.Fonts.family.bold,
     marginRight: 5,
   },
   value: {
-    fontSize: theme.Fonts.size.body.md,
-    fontWeight: 'bold',
+    fontSize: theme.Fonts.size.body.sm,
+    fontFamily: theme.Fonts.family.bold,
   },
   
   modalBackground: {
@@ -105,12 +104,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: theme.Fonts.size.heading.sm,
+    fontFamily: theme.Fonts.family.bold,
     marginBottom: 10,
   },
   modalDescription: {
-    fontSize: 16,
+    fontSize: theme.Fonts.size.heading.xs,
     marginBottom: 20,
   },
 });

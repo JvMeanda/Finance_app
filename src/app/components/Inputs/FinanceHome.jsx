@@ -107,7 +107,6 @@ export default function FinanceHome() {
       </View>
       <Text style={styles.label}>Vendas:</Text>
       <Input
-        style={styles.input}
         placeholder="Insira o valor das vendas"
         value={sales}
         onChangeText={(value) => setSales(value)}
@@ -116,7 +115,6 @@ export default function FinanceHome() {
 
       <Text style={styles.label}>Despesas:</Text>
       <Input
-        style={styles.input}
         placeholder="Insira o valor das despesas"
         value={expenses}
         onChangeText={(value) => setExpenses(value)}
@@ -125,7 +123,6 @@ export default function FinanceHome() {
 
       <Text style={styles.label}>Descrição:</Text>
       <Input
-        style={styles.input}
         placeholder="Insira uma descrição"
         value={description}
         onChangeText={setDescription}

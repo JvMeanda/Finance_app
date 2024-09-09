@@ -9,11 +9,18 @@ export const styles = StyleSheet.create({
         shadowOffset: {width: 10, height: 10},
         shadowOpacity: 10,
         elevation: 8,
-
+        padding: 4
     },
-    text: {
-        fontSize: theme.Fonts.size.heading.lg,
-        padding: 8,
+    textTitle: {
+        fontSize: theme.Fonts.size.heading.md,
+        fontFamily: theme.Fonts.family.medium,
         textAlign: 'center',
+        marginTop: 4,
+    },
+    textIcon: {
+        fontSize: theme.Fonts.size.heading.md,
+        fontFamily: theme.Fonts.family.medium,
+        textAlign: 'center',
+        padding: 2
     },
 });

@@ -3,13 +3,13 @@ import { theme } from '../theme/Index';
 
 export const styles = StyleSheet.create({
     labelStyle: {
-        fontWeight: 'bold',
-        fontSize: theme.Fonts.size.body.xs,
-        marginBottom: 5,
+        fontFamily: theme.Fonts.family.bold,
+        fontSize: theme.Fonts.size.body.xxs,
+        marginBottom: 1,
     },
     barStyle: {
-        paddingVertical: 1,
-        height: 50,
+        paddingVertical: 4,
+        height: 52,
         justifyContent: 'center',
         alignItems: 'center',
     },

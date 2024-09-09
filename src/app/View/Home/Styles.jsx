@@ -7,6 +7,6 @@ export const styles = StyleSheet.create({
     padding: 30,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: theme.Colors.white
+    backgroundColor: theme.Colors.white,
   },
 });
