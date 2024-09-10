@@ -11,7 +11,7 @@ export default function FinanceDashboard({ selectedDate }) {
     const [transactions, setTransactions] = useState([]);
     const [years, setYears] = useState([2023, 2024]);
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-    const [selectedMonth, setSelectedMonth] = useState(null);
+    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
     const [refreshing, setRefreshing] = useState(false);
 
     const financeDatabase = useFinanceDatabase();
